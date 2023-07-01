@@ -236,14 +236,18 @@ namespace WSRSim3.Pages
                         {
                             return;
                         }
+                        else
+                        {
+                            foreach (var i in item.Task1)
+                            {
+                                i.PreviousTaskId = null;
+                            }
+                        }
                     }
                     
                         
                         item.StatusId = 4;
-                        foreach(var i in item.Task1)
-                        {
-                            i.PreviousTaskId = null;
-                        }
+                        
                         Db.SaveChanges();
                         loadData();
                     
