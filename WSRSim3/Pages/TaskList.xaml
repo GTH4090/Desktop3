@@ -39,6 +39,13 @@
                 <DataGridTextColumn x:Name="executiveEmployeeIdColumn" Binding="{Binding Employee.Name}" Header="Executive Employee Id" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="fullTitleColumn" Binding="{Binding FullTitle}" Header="Full Title" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="shortTitleColumn" Binding="{Binding ShortTitle}" Header="Short Title" Width="SizeToHeader"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="DelBtn" Content="Удалить" Click="DelBtn_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">

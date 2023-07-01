@@ -132,6 +132,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Task_Task">
+    <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
+    <End Role="Task1" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Task1">
+        <PropertyRef Name="PreviousTaskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Task_TaskStatus">
     <End Role="TaskStatus" Type="Self.TaskStatus" Multiplicity="1" />
     <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -252,6 +264,10 @@
     <AssociationSet Name="FK_Task_Project" Association="Self.FK_Task_Project">
       <End Role="Project" EntitySet="Project" />
       <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_Task" Association="Self.FK_Task_Task">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="Task1" EntitySet="Task" />
     </AssociationSet>
     <AssociationSet Name="FK_Task_TaskStatus" Association="Self.FK_Task_TaskStatus">
       <End Role="TaskStatus" EntitySet="TaskStatus" />

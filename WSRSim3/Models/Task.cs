@@ -21,6 +21,7 @@ namespace WSRSim3.Models
             this.TaskComment = new HashSet<TaskComment>();
             this.TaskHistory = new HashSet<TaskHistory>();
             this.TaskSpectator = new HashSet<TaskSpectator>();
+            this.Task1 = new HashSet<Task>();
         }
     
         public int Id { get; set; }
@@ -49,5 +50,8 @@ namespace WSRSim3.Models
         public virtual ICollection<TaskHistory> TaskHistory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskSpectator> TaskSpectator { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Task> Task1 { get; set; }
+        public virtual Task Task2 { get; set; }
     }
 }

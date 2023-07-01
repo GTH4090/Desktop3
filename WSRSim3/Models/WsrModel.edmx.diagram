@@ -25,6 +25,7 @@
         <AssociationConnector Association="WSRSim3Model.FK_TaskHistory_Task" ManuallyRouted="false" />
         <AssociationConnector Association="WSRSim3Model.FK_TaskSpectator_Task" ManuallyRouted="false" />
         <AssociationConnector Association="WSRSim3Model.FK_TaskHistory_TaskStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="WSRSim3Model.FK_Task_Task" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

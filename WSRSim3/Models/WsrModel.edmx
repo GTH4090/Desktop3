@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище WSRSim3Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище WSRSim3Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -137,6 +137,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Task_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="Task1" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task1">
+              <PropertyRef Name="PreviousTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_TaskStatus">
           <End Role="TaskStatus" Type="Self.TaskStatus" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -258,6 +270,10 @@
             <End Role="Project" EntitySet="Project" />
             <End Role="Task" EntitySet="Task" />
           </AssociationSet>
+          <AssociationSet Name="FK_Task_Task" Association="Self.FK_Task_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Task1" EntitySet="Task" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_TaskStatus" Association="Self.FK_Task_TaskStatus">
             <End Role="TaskStatus" EntitySet="TaskStatus" />
             <End Role="Task" EntitySet="Task" />
@@ -291,8 +307,7 @@
             <End Role="TaskSpectator" EntitySet="TaskSpectator" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WSRSim3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -352,6 +367,8 @@
           <NavigationProperty Name="TaskComment" Relationship="Self.FK_TaskComment_Task" FromRole="Task" ToRole="TaskComment" />
           <NavigationProperty Name="TaskHistory" Relationship="Self.FK_TaskHistory_Task" FromRole="Task" ToRole="TaskHistory" />
           <NavigationProperty Name="TaskSpectator" Relationship="Self.FK_TaskSpectator_Task" FromRole="Task" ToRole="TaskSpectator" />
+          <NavigationProperty Name="Task1" Relationship="WSRSim3Model.FK_Task_Task" FromRole="Task" ToRole="Task1" />
+          <NavigationProperty Name="Task2" Relationship="WSRSim3Model.FK_Task_Task" FromRole="Task1" ToRole="Task" />
         </EntityType>
         <EntityType Name="TaskAttachment">
           <Key>
@@ -605,7 +622,23 @@
             <End Role="TaskStatus" EntitySet="TaskStatus" />
             <End Role="TaskHistory" EntitySet="TaskHistory" />
           </AssociationSet>
+          <AssociationSet Name="FK_Task_Task" Association="WSRSim3Model.FK_Task_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Task1" EntitySet="Task" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Task_Task">
+          <End Type="WSRSim3Model.Task" Role="Task" Multiplicity="0..1" />
+          <End Type="WSRSim3Model.Task" Role="Task1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task1">
+              <PropertyRef Name="PreviousTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

@@ -56,6 +56,8 @@
     <NavigationProperty Name="TaskComment" Relationship="Self.FK_TaskComment_Task" FromRole="Task" ToRole="TaskComment" />
     <NavigationProperty Name="TaskHistory" Relationship="Self.FK_TaskHistory_Task" FromRole="Task" ToRole="TaskHistory" />
     <NavigationProperty Name="TaskSpectator" Relationship="Self.FK_TaskSpectator_Task" FromRole="Task" ToRole="TaskSpectator" />
+    <NavigationProperty Name="Task1" Relationship="WSRSim3Model.FK_Task_Task" FromRole="Task" ToRole="Task1" />
+    <NavigationProperty Name="Task2" Relationship="WSRSim3Model.FK_Task_Task" FromRole="Task1" ToRole="Task" />
   </EntityType>
   <EntityType Name="TaskAttachment">
     <Key>
@@ -309,5 +311,21 @@
       <End Role="TaskStatus" EntitySet="TaskStatus" />
       <End Role="TaskHistory" EntitySet="TaskHistory" />
     </AssociationSet>
+    <AssociationSet Name="FK_Task_Task" Association="WSRSim3Model.FK_Task_Task">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="Task1" EntitySet="Task" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_Task_Task">
+    <End Type="WSRSim3Model.Task" Role="Task" Multiplicity="0..1" />
+    <End Type="WSRSim3Model.Task" Role="Task1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Task1">
+        <PropertyRef Name="PreviousTaskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

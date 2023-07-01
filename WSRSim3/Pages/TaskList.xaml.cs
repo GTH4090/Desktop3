@@ -221,5 +221,38 @@ namespace WSRSim3.Pages
         {
             loadData();
         }
+
+        private void DelBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                if(MessageBox.Show("Вы уверены?", "Точно?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    var item = (sender as Button).DataContext as Models.Task;
+                    if(item.Task1.Count() != 0)
+                    {
+                        if (MessageBox.Show("Будут удалены все ссылки на удаляемую задачу?", "Точно?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                        {
+                            return;
+                        }
+                    }
+                    
+                        
+                        item.StatusId = 4;
+                        foreach(var i in item.Task1)
+                        {
+                            i.PreviousTaskId = null;
+                        }
+                        Db.SaveChanges();
+                        loadData();
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Error(ex.Message);
+            }
+        }
     }
 }
