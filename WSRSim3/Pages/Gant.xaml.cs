@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WSRSim3.UpWindows;
 
 namespace WSRSim3.Pages
 {
@@ -26,6 +27,14 @@ namespace WSRSim3.Pages
             InitializeComponent();
             File.WriteAllText("Memory.txt", "3");
 
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            GantWin gant = new GantWin();
+            gant.ShowDialog();
+
+            NavigationService.Navigate(new Dashboard());
         }
     }
 }
