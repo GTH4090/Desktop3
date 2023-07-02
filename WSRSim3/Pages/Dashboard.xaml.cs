@@ -104,10 +104,43 @@ namespace WSRSim3.Pages
                 Error(ex.Message);
             }
         }
+        private void checkSize()
+        {
+
+            try
+            {
+                if(MainGrid.ActualWidth < 1920 - 1920 / 4)
+                {
+                    Grid.SetColumn(OpenPerWeekSp, 0);
+                    Grid.SetRow(OpenPerWeekSp, 1);
+                    Grid.SetColumn(BestSp, 1);
+                    Grid.SetColumn(WorstSp, 2);
+                    MainGrid.ColumnDefinitions[3].Width = new GridLength(0);
+                }
+                else
+                {
+                    Grid.SetColumn(OpenPerWeekSp, 3);
+                    Grid.SetRow(OpenPerWeekSp, 0);
+                    Grid.SetColumn(BestSp, 0);
+                    Grid.SetColumn(WorstSp, 1);
+                    MainGrid.ColumnDefinitions[3].Width = new GridLength(1, GridUnitType.Star);
+                }
+            }
+            catch (Exception ex)
+            {
+                Error(ex.Message);
+            }
+        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             loadData();
+            checkSize();
+        }
+
+        private void MainGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            checkSize();
         }
     }
 }
