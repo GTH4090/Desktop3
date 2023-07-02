@@ -180,20 +180,31 @@ namespace WSRSim3.UpWindows
                                     var task2 = (item2 as Label).Tag as Models.Task;
                                     if (task2.Id == task.PreviousTaskId)
                                     {
-                                        double startX = GantGrid.ActualWidth / GantGrid.ColumnDefinitions.Count() * (Grid.GetColumn(item2 as Label) ) + GantGrid.ActualWidth / GantGrid.ColumnDefinitions.Count() / 2;
+                                        double startX = ScaleSl.Value * (Grid.GetColumn(item2 as Label) ) + ScaleSl.Value / 2;
                                         double startY = GantGrid.ActualHeight / GantGrid.RowDefinitions.Count() * (Grid.GetRow(item2 as Label)) + GantGrid.ActualHeight / GantGrid.RowDefinitions.Count() / 2;
                                         Point startPoint = new Point(startX, startY);
-                                        double endX = GantGrid.ActualWidth / GantGrid.ColumnDefinitions.Count() * (Grid.GetColumn(item as Label) ) + GantGrid.ActualWidth / GantGrid.ColumnDefinitions.Count() / 2;
+                                        double endX = ScaleSl.Value * (Grid.GetColumn(item as Label) ) + ScaleSl.Value / 2;
                                         double endY = GantGrid.ActualHeight / GantGrid.RowDefinitions.Count() * (Grid.GetRow(item as Label)) + GantGrid.ActualHeight / GantGrid.RowDefinitions.Count() / 2;
                                         Point endPoint = new Point(endX, endY);
 
                                         
                                         LineGeometry line1 = new LineGeometry(startPoint, endPoint);
-                                        Path path = new Path();
-                                        path.Stroke = Brushes.Red;
-                                        path.StrokeThickness = 10;
+                                        LineGeometry line2 = new LineGeometry(endPoint, new Point(endPoint.X + 20, endPoint.Y + 20));
+                                        LineGeometry line3 = new LineGeometry(endPoint, new Point(endPoint.X + 20, endPoint.Y - 20));
 
-                                        path.Data = line1;
+                                        GeometryGroup combined = new GeometryGroup();
+                                        combined.Children.Add(line1);
+                                        combined.Children.Add(line2);
+                                        combined.Children.Add(line3);  
+                                        Path path = new Path();
+                                        path.Stroke = Brushes.Black;
+                                        path.StrokeThickness = 4;
+
+                                        
+
+                                        path.Data = combined;
+                                        Grid.SetColumnSpan(path, GantGrid.ColumnDefinitions.Count());
+                                        Grid.SetRowSpan(path, GantGrid.RowDefinitions.Count());
 
                                         pathes.Add(path);
                                     }
