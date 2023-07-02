@@ -17,6 +17,8 @@ using System.Windows.Threading;
 using static WSRSim3.Classes.Helper;
 using WSRSim3.Models;
 using System.Reflection;
+using System.Windows.Forms.DataVisualization.Charting;
+using Grid = System.Windows.Controls.Grid;
 
 namespace WSRSim3.Pages
 {
@@ -34,6 +36,26 @@ namespace WSRSim3.Pages
             Timer.Interval = new TimeSpan(0, 0, 30);
             Timer.Tick += Timer_Tick;
             Timer.Start();
+            GenerateChart();
+        }
+
+        private void GenerateChart()
+        {
+
+            try
+            {
+                Mainchart.ChartAreas.Add(new ChartArea("123"));
+                Mainchart.Series.Add(new Series("123"));
+                Mainchart.Series[0].ChartType = SeriesChartType.Doughnut;
+                Mainchart.Series[0].IsValueShownAsLabel = true;
+                Mainchart.Series[0].LabelFormat = "P0";
+
+                Mainchart.Legends.Add(new Legend());
+            }
+            catch (Exception ex)
+            {
+                Error(ex.Message);
+            }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -97,6 +119,12 @@ namespace WSRSim3.Pages
                 List<Employee> worstEmployees = Db.Employee.ToList().OrderByDescending(el => el.DeadlinedCount).Take(5).ToList();
                 WorstemployeeDataGrid.ItemsSource = worstEmployees;
 
+
+                var ox = Db.TaskStatus.Select(el => el.Name).ToList();
+                double taskCount = Db.Task.Where(el => el.ProjectId == SelectedProject.Id).Count();
+                var oy = Db.TaskStatus.Select(el => el.Task.Count() / taskCount).ToList();
+
+                Mainchart.Series[0].Points.DataBindXY(ox, oy);
 
             }
             catch (Exception ex)

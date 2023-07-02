@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WSRSim3.Pages"
       xmlns:Models="clr-namespace:WSRSim3.Models" x:Class="WSRSim3.Pages.Dashboard"
+      xmlns:Chart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Дашборд" Loaded="Page_Loaded">
@@ -99,6 +100,12 @@
             </DataGrid>
 
         </StackPanel>
-        
+
+
+        <WindowsFormsHost Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Chart:Chart x:Name="Mainchart">
+                
+            </Chart:Chart>
+        </WindowsFormsHost>
     </Grid>
 </Page>
